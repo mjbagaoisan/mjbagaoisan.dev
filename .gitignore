@@ -39,3 +39,6 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# original raw video files (use compressed .mp4 versions instead)
+public/videos/*.mov
