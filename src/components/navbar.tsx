@@ -4,11 +4,11 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 import { createPortal } from "react-dom";
+import { motion } from "motion/react";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/theme-toggle";
 import { DATA } from "@/data/resume-data";
 import { Dock, DockIcon } from "@/components/ui/dock";
-import { BlurFade } from "@/components/ui/blur-fade";
 
 function PreviewPortal({ href, label }: { href: string; label: string }) {
   const [mounted, setMounted] = useState(false);
@@ -66,9 +66,16 @@ export function Navbar() {
       {hoveredItem && (
         <PreviewPortal href={hoveredItem.href} label={hoveredItem.label} />
       )}
-      <BlurFade delay={0.1}>
-        <header className="pointer-events-none fixed inset-x-0 bottom-0 z-50 flex justify-center pb-6 md:top-0 md:bottom-auto md:pt-6">
-          <nav className="pointer-events-auto">
+      <motion.header
+        initial={{ opacity: 0, y: -6 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.14, duration: 0.4, ease: "easeOut" }}
+        className="pointer-events-none fixed inset-x-0 bottom-0 z-50 flex justify-center pb-[max(1.5rem,env(safe-area-inset-bottom))] md:top-0 md:bottom-auto md:pb-0 md:pt-6"
+      >
+          <nav
+            className="pointer-events-auto"
+            style={{ animation: "navbar-blur-in 0.4s ease-out 0.14s both" }}
+          >
             <Dock
             direction="middle"
             className="border-border/40 bg-background/70 shadow-lg shadow-black/[0.03] backdrop-blur-xl dark:shadow-white/[0.03]"
@@ -115,8 +122,7 @@ export function Navbar() {
             </DockIcon>
           </Dock>
           </nav>
-        </header>
-      </BlurFade>
+      </motion.header>
     </>
   );
 }
